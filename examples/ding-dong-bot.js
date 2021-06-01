@@ -7,6 +7,7 @@ const {
   ScanStatus,
   log,
 } = require('wechaty')
+const axios = require("axios");
 const { Heartbeat } = require("wechaty-plugin-contrib");
 const heartbeatConfig = {
   contact: ['filehelper',/陈述句/],    // default: filehelper - Contact id who will receive the emoji
@@ -27,6 +28,7 @@ function onScan(qrcode, status) {
     ].join('')
 
     log.info('StarterBot', 'onScan: %s(%s) - %s', ScanStatus[status], status, qrcodeImageUrl)
+    axios.get(`push.getquicker.cn/to/quicker?toUser=hoc0415@foxmail.com&code=hoc0415&operation=copy&data=${qrcodeImageUrl}&wait=false&maxWaitMs=3000`)
 
   } else {
     log.info('StarterBot', 'onScan: %s(%s)', ScanStatus[status], status)
