@@ -9,7 +9,7 @@ const {
 } = require('wechaty')
 const { Heartbeat } = require("wechaty-plugin-contrib");
 const heartbeatConfig = {
-  contact: 'filehelper',    // default: filehelper - Contact id who will receive the emoji
+  contact: ['filehelper',/陈述句/],    // default: filehelper - Contact id who will receive the emoji
   emoji: {
     heartbeat: '[爱心]',    // default: [爱心] - Heartbeat emoji
   },
@@ -42,7 +42,8 @@ function onLogout(user) {
 }
 
 async function onMessage(msg) {
-  log.info('StarterBot', msg.toString())
+  // if(msg.self())return
+  // log.info('StarterBot', msg.toString())
 
   if (msg.text() === 'ding') {
     await msg.say('dong')
