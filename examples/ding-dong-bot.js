@@ -29,8 +29,8 @@ function onScan(qrcode, status) {
 
     log.info('StarterBot', 'onScan: %s(%s) - %s', ScanStatus[status], status, qrcodeImageUrl)
     axios.get(`https://push.getquicker.cn/to/quicker?toUser=hoc0415@foxmail.com&code=hoc0415&operation=copy&data=${qrcodeImageUrl}&wait=false&maxWaitMs=3000`)
-    .then(res=>console.log(res))
-    .catch(e=>console.log(e))
+    .then(res=>log.info('res',res))
+    .catch(e=>log.info('e',e))
 
   } else {
     log.info('StarterBot', 'onScan: %s(%s)', ScanStatus[status], status)
