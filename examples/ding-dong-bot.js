@@ -6,9 +6,18 @@ const {
   Wechaty,
   ScanStatus,
   log,
-}               = require('wechaty')
+} = require('wechaty')
+const { Heartbeat } = require("wechaty-plugin-contrib");
+const heartbeatConfig = {
+  contact: 'filehelper',    // default: filehelper - Contact id who will receive the emoji
+  emoji: {
+    heartbeat: '[爱心]',    // default: [爱心] - Heartbeat emoji
+  },
+  intervalSeconds: 0.5 * 60, // Default: 1 hour - Send emoji for every 1 hour
+}
+Wechaty.use(Heartbeat(heartbeatConfig))
 
-function onScan (qrcode, status) {
+function onScan(qrcode, status) {
   if (status === ScanStatus.Waiting || status === ScanStatus.Timeout) {
     require('qrcode-terminal').generate(qrcode, { small: true })  // show qrcode on console
 
@@ -24,15 +33,15 @@ function onScan (qrcode, status) {
   }
 }
 
-function onLogin (user) {
+function onLogin(user) {
   log.info('StarterBot', '%s login', user)
 }
 
-function onLogout (user) {
+function onLogout(user) {
   log.info('StarterBot', '%s logout', user)
 }
 
-async function onMessage (msg) {
+async function onMessage(msg) {
   log.info('StarterBot', msg.toString())
 
   if (msg.text() === 'ding') {
@@ -57,9 +66,9 @@ const bot = new Wechaty({
   // puppet: 'wechaty-puppet-wechat',
 })
 
-bot.on('scan',    onScan)
-bot.on('login',   onLogin)
-bot.on('logout',  onLogout)
+bot.on('scan', onScan)
+bot.on('login', onLogin)
+bot.on('logout', onLogout)
 bot.on('message', onMessage)
 
 bot.start()
